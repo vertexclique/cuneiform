@@ -68,3 +68,21 @@ Check out [cuneiform-fields](https://github.com/vertexclique/cuneiform-fields) f
 * Cuneiform doesn't have specific instruction or architecture specific code.
 * Works with crates like `#![no_std]`. Ease your pain for cache optimizations. With allocator you can compile on the board too.
 * Not based on assumptions. Based on Linux tree, OS checks, provider manuals and related documentation.
+
+## Before opening a PR
+* If it is big.LITTLE architecture, separate both parts in slabs. Apply the naming conventions.
+* Check existing slabs before opening a PR. Please update it when you add one.
+* If you come up with instructionless detection for hermetic alignment. Be sure that tests are included and not breaking existing platforms.
+
+## Existing Slabs
+
+* powerpc_mpc8xx
+* powerpc64bridge
+* powerpc_e500mc
+* power_7
+* power_8
+* power_9
+* exynos_big
+* exynos_LITTLE
+* krait
+* neoverse_n1
