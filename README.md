@@ -45,7 +45,7 @@ pub struct Varying {
 
 Targeting specific architecture:
 ```rust
-#[cuneiform(slab = "krait")]
+#[cuneiform(slab = "powerpc_mpc8xx")]
 pub struct SlabBased {
     data: u8,
     data_2: u16,
