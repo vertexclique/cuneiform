@@ -1,0 +1,46 @@
+[package]
+name = "cuneiform"
+version = "0.1.0"
+description = "Cache optimizations for Rust, revived from the slabs of Sumer."
+authors = ["Mahmut Bulut <vertexclique@gmail.com>"]
+keywords = ["cache", "optimizations", "architecture", "cache-optimizations", "no_std"]
+categories = ["concurrency", "data-structures", "algorithms"]
+homepage = "https://github.com/vertexclique/cuneiform"
+repository = "https://github.com/vertexclique/cuneiform"
+documentation = "https://docs.rs/cuneiform"
+readme = "README.md"
+license = "Apache-2.0/MIT"
+edition = "2018"
+exclude = [
+	".github/*",
+	"examples/*",
+	"graphstore/*",
+	"tests/*",
+	"img/*",
+	"ci/*",
+	"benches/*",
+	"doc/*",
+	"*.png",
+	"*.dot",
+	"*.yml",
+	"*.toml",
+	"*.md"
+]
+
+[badges]
+travis-ci = { repository = "vertexclique/cuneiform", branch = "master" }
+maintenance = { status = "actively-developed" }
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "1.0"
+quote = "1.0"
+lazy_static = "1.4"
+hashbrown = "0.6"
+heapless = "0.5"
+walkdir = "2.2"
+
+[dev-dependencies]
+trybuild = "1.0"
