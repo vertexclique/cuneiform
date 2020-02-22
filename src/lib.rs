@@ -1,8 +1,8 @@
-//! # Cuneiform: Cache optimizations for Rust, revived from the slabs of Sumer.
-//! [![Cuneiform](https://github.com/vertexclique/cuneiform/raw/master/img/cuneiform-logo.png)](https://github.com/vertexclique/cuneiform)
+//! # Cuneiform: In memory optimizations for Rust, revived from the slabs of Sumer.
 //!
-//! This crate provides a proc macro attribute to optimize CPU cache operations for user defined structs.
-//! Cuneiform can take various arguments at attribute position:
+//! This crate provides proc macro attributes to improve in memory data access times.
+//!
+//! Cuneiform's main macro can take various arguments at attribute position:
 //! * `hermetic = true|false` (default is `true` when `#[cuneiform]`)
 //! * Hermetic enables cuneiform to detect cache sizes from OSes which have API to fetch.
 //! * Currently, hermetic argument works only Linux kernel 2.6.32 and above.
@@ -67,8 +67,6 @@
 extern crate proc_macro;
 use self::proc_macro::TokenStream;
 
-use heapless::consts::*;
-use heapless::String;
 use quote::*;
 use syn::parse::{Parse, ParseStream, Result};
 use syn::{parse_macro_input, DeriveInput, Index, LitBool, LitInt, LitStr, Token};
@@ -82,7 +80,7 @@ pub(crate) struct CuneiformArgs {
     /// Inherit coherency size targeting from the current machine that the compiler runs. (Default)
     pub(crate) hermetic: bool,
     /// Force the slab that is going to be used.
-    pub(crate) slab: String<U64>,
+    pub(crate) slab: String,
     /// Force size to a specific amount. Overrides any other parameter.
     pub(crate) force: isize,
 }
@@ -100,7 +98,7 @@ impl CuneiformArgs {
         self.hermetic = hermetic;
     }
 
-    fn with_slab(&mut self, slab: String<U64>) {
+    fn with_slab(&mut self, slab: String) {
         self.slab = slab;
     }
 
@@ -171,5 +169,34 @@ pub fn cuneiform(args: TokenStream, input: TokenStream) -> TokenStream {
         // Preserve the input struct unchanged in the output.
         #[repr(align(#frep))]
         #input
+    })
+}
+
+///
+/// Boundary size alignment for RAM data.
+///
+/// This macro allows fetching feasible local data size boundary alignment,
+/// and embeds it into your code as constant with the same name.
+/// When acquired it can be used to have single-shot aligned contiguous memory blocks.
+///
+/// # Example
+///
+/// ```rust
+/// # use std::alloc::Layout;
+/// use cuneiform::*;
+///
+/// #[boundary_size]
+/// type BS = ();
+///
+/// let layout = unsafe {
+///    Layout::from_size_align_unchecked(1 << 4, BOUNDARY_SIZE as usize)
+/// };
+/// assert_eq!(layout.align(), BOUNDARY_SIZE as usize);
+/// ```
+#[proc_macro_attribute]
+pub fn boundary_size(_attr: TokenStream, _input: TokenStream) -> TokenStream {
+    let boundary = crate::slabs::fallbackless_slab_fetch();
+    TokenStream::from(quote! {
+        pub const BOUNDARY_SIZE: u8 = #boundary;
     })
 }
