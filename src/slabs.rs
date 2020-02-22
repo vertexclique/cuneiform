@@ -1,6 +1,6 @@
 use super::CuneiformArgs;
-use std::collections::HashMap;
 use lazy_static::*;
+use std::collections::HashMap;
 
 // ----------------------------------------------------
 // Ok, here we go with a Sumerian slab.
