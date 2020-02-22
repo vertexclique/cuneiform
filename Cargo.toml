@@ -1,6 +1,6 @@
 [package]
 name = "cuneiform"
-version = "0.1.1-alpha.0"
+version = "0.1.1"
 description = "Cache optimizations for Rust, revived from the slabs of Sumer."
 authors = ["Mahmut Bulut <vertexclique@gmail.com>"]
 keywords = ["cache", "optimizations", "architecture", "cache-optimizations", "no_std"]
