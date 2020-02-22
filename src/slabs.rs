@@ -1,6 +1,6 @@
 use super::CuneiformArgs;
-use hashbrown::HashMap;
 use lazy_static::*;
+use std::collections::HashMap;
 
 // ----------------------------------------------------
 // Ok, here we go with a Sumerian slab.
@@ -161,4 +161,8 @@ pub(crate) fn slab_fetch(args: CuneiformArgs) -> u8 {
     slabs()
         .get(args.slab.as_str())
         .map_or(COHERENCE_LINE_SIZE, |e| *e)
+}
+
+pub(crate) fn fallbackless_slab_fetch() -> u8 {
+    COHERENCE_LINE_SIZE
 }

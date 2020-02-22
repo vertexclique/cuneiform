@@ -3,7 +3,7 @@
 </h1>
 <div align="center">
  <strong>
-   Cache optimizations for Rust, revived from the slabs of Sumer.
+   In memory optimizations for Rust, revived from the slabs of Sumer.
  </strong>
 <hr>
 
@@ -12,8 +12,9 @@
 [![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/cuneiform/)
 </div>
 
-This crate provides a proc macro attribute to optimize CPU cache operations for user defined structs.
-Cuneiform can take various arguments at attribute position:
+This crate provides proc macro attributes to improve in memory data access times.
+
+Cuneiform's main macro can take various arguments at attribute position:
 * `hermetic = true|false` (default is `true` when `#[cuneiform]`)
     * Hermetic enables cuneiform to detect cache sizes from OSes which have API to fetch.
     * Currently, hermetic argument works only Linux kernel 2.6.32 and above.
